@@ -1,0 +1,179 @@
+[33mcommit 605f273bc3b4eb670728d7d55491cc3006eaa99b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: devi30232 <devilahari333@gmail.com>
+Date:   Sat Aug 8 01:36:02 2026 +0530
+
+    PATA project Initial commit
+
+[33mcommit dbd512f4baf5602789c7c51555ed234eacc4fefa[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Sun Jun 14 02:52:41 2026 +0530
+
+    docs(HANDOFF): full 2026-06-14 session state — repositioning + strategic verdict
+    
+    Capture README/PyPI repositioning, the parser-viability verdict (viable-as-fit
+    not as-traction; stop chasing F1; bottleneck is a missing user), repro/env
+    notes (eval venv), commit hashes, and a re-prioritised NEXT (get one real user).
+    
+    Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+
+[33mcommit 52eefd8e292b90e042738f117997b920960cdd9c[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Sun Jun 14 02:08:59 2026 +0530
+
+    docs: reposition README/PyPI to the honest strong-core story
+    
+    Lead with what the tool actually nails (offline pincode->city/district/state
+    + deliverability, F1 0.96-0.99) instead of over-claiming full-field parsing.
+    
+    - Hero + PyPI description: "offline India address resolver", rock-solid admin
+      fields, best-effort free-text fields.
+    - New "What it nails, and what's best-effort" tier block — calibrates users.
+    - Surface the TinyBERT head-to-head in the lede (760MB/state 0.27/no district
+      vs 5MB/state 0.98/district 0.97).
+    - Refresh accuracy table to v0.5 (grouped by reliability tier), fix stale
+      pincode count (23,915 -> 26,711).
+    - Rewrite roadmap: mark v0.2-0.4 shipped; drop the Claude-API/distilled-model
+      items that contradicted the zero-network contract.
+    
+    Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+
+[33mcommit ba0586de8ccc92185a85e029a19aba010ef21ee4[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Sun Jun 14 01:44:30 2026 +0530
+
+    feat(parser): city→(district,state) reverse-index + _is_dup fix
+    
+    Adversarial-review-driven, deterministic, zero-network, zero-new-dep.
+    gold_200: exact 125→129; building_name +0.048, locality +0.017, state +0.011.
+    
+    - pincode.py: _city_index/city_to_admin/is_known_city — invert the shipped
+      directory (2,580 cities) at import, lru_cached.
+    - parser.py: recover state from city on pincode-less rows (state-only;
+      district guessing was net-negative). Remove _is_dup reverse-substring match
+      that dropped localities containing the city name (Thane West, Navi Mumbai).
+    - tests/test_reverse_index.py: 9 tests. Suite 153 passed.
+    
+    Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+
+[33mcommit e313bfe693f8eb83f43c30940de15cc26989dd27[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Tue Apr 14 02:06:29 2026 +0100
+
+    site: add GitHub stars badge in hero and Licence/Docs links in footer
+    
+    Addresses two valid items from an external site review: the page had
+    no live GitHub stars signal and no explicit Licence link in the footer.
+    
+    - Hero: shields.io live stars badge next to the version badge, styled
+      in plum/gold to match the locked design tokens.
+    - Footer: adds Docs (README anchor) and Licence (LICENSE file on
+      GitHub) links alongside the existing GitHub / PyPI / org links.
+    
+    Regenerated from the private local site-building tooling; YAML and
+    template changes live outside this repo on the author's machine.
+    Deployed to bharataddress.nativerse-ventures.com (dpl_42mnDVr5).
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+[33mcommit 0a69f6b8a79a4cb9b75cf4d9987923917ac2222e[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Tue Apr 14 01:43:21 2026 +0100
+
+    docs(README): link product site and add current v0.4 F1 snippet
+    
+    - Top-of-README link to bharataddress.nativerse-ventures.com so GitHub
+      and PyPI readers can jump to the benchmarks page.
+    - Compact v0.4 per-field F1 table at the start of the Benchmarks
+      section (pincode 0.995 / state 0.971 / district 0.965 / city 0.959 /
+      building_number 0.962 / landmark 0.918 / locality 0.796 /
+      building_name 0.679). Numbers verified by re-running
+      scripts/evaluate.py against tests/data/gold_200.jsonl.
+    - The existing v0.1.2-vs-TinyBERT comparison stays untouched because
+      the TinyBERT eval was run against v0.1.2 and the pairing is only
+      meaningful at that baseline.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+[33mcommit 6139b95064c5c568b55aa8146359b13b00f31486[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Tue Apr 14 01:26:55 2026 +0100
+
+    feat: regenerate bharataddress.nativerse-ventures.com and update HANDOFF
+    
+    Rebuild bharataddress-site/index.html from the current content. Identical
+    rendered output; file drops ~3.9KB (CSS whitespace compaction).
+    
+    Deployed to Vercel prod:
+    - https://bharataddress-site.vercel.app/ → 200
+    - https://bharataddress.nativerse-ventures.com/ → 200, DNS propagated
+    
+    Also adds a .gitignore inside bharataddress-site/ for the Vercel CLI's
+    local .vercel/ project-link directory, and updates HANDOFF.md with the
+    2026-04-14 redeploy entry and forward-carried outreach actions.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+[33mcommit ca95e8a33543d37eb9c09f3befcc05663bf8ed91[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Tue Apr 14 00:37:26 2026 +0100
+
+    feat: bharataddress.nativerse-ventures.com product page
+    
+    Single-file static site deployed to Vercel as subdomain of
+    nativerse-ventures.com. Plum/gold design system matching parent site.
+    
+    All content verified against real API:
+    - Eval F1 scores from gold_200.jsonl (pincode 0.995, state 0.971)
+    - Speed: 19K addr/sec (measured)
+    - Correct parse() API surface with real output fields
+    - Correct Indic script samples in native scripts
+    - Honest benchmark table (no fabricated competitor numbers)
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+[33mcommit 6643eb7fe99198cd41c3e4064ea8350ec3355e26[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Mon Apr 13 19:42:01 2026 +0100
+
+    docs: GitHub outreach research — scan results, issue drafts, Reddit post draft
+    
+    Scanned GitHub code search for repos with Indian address parsing pain points.
+    50+ repos analysed across 6 query families. Produced target list, 2 issue
+    drafts (sa1if3/django_ecommerce, leadpoet/leadpoet), and r/developersIndia
+    post draft ("Your pincode regex validates nothing").
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+[33mcommit 92ca478a90397ad117779c7251efddecc617c45c[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Thu Apr 9 02:28:16 2026 +0100
+
+    docs: HANDOFF — v0.4.0 published to PyPI
+
+[33mcommit 9625749e89da4b390f768dbb4036e33c7e64d225[m[33m ([m[1;33mtag: [m[1;33mv0.4.0[m[33m)[m
+Merge: fc2e13d e502b8f
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Thu Apr 9 02:26:48 2026 +0100
+
+    Merge v0.4.0: multilingual + vernacular release
+
+[33mcommit e502b8fe2f47105f57ecbdb36780ccf99e269725[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Thu Apr 9 02:26:42 2026 +0100
+
+    release: v0.4.0 — multilingual + vernacular
+    
+    Bumps version to 0.4.0 across __init__.py and pyproject.toml. Adds
+    CHANGELOG.md with the full v0.4 release notes. 162 tests passing.
+    Architectural constraints (zero-network parse, optional indic extras,
+    v0.3 English regression gate) all locked.
+
+[33mcommit 595b5bc8cd9d590607f1509f0ffcedbedde6004a[m
+Author: Neelagiri65 <neelagiri.chettiyar@nativerse-ventures.com>
+Date:   Thu Apr 9 02:24:34 2026 +0100
+
+    feat(v0.4): Overpass backoff + offline pincode sanity check
+    
+    Issue #6 follow-up + issue #8.
+    
+    scrip
