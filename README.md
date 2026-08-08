@@ -66,8 +66,10 @@ pip install bharataddress
 Or from source:
 
 ```bash
-git clone https://github.com/Neelagiri65/bharataddress
-cd bharataddress
+git https://github.com/devi30232/PATA
+
+cd PATA
+
 pip install -e .
 ```
 
